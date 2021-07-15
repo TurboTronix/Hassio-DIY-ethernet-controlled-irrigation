@@ -1,0 +1,597 @@
+switch:
+  - platform: command_line
+    switches:
+      irrig_zone1:
+        command_on: "curl -X GET http://192.168.#.#/####/00"
+        command_off: "curl -X GET http://192.168.#.#/####/01"
+        friendly_name: Zone 01
+      irrig_zone2:
+        command_on: "curl -X GET http://192.168.#.#/####/02"
+        command_off: "curl -X GET http://192.168.#.#/####/03"
+        friendly_name: Zone 02
+      irrig_zone3:
+        command_on: "curl -X GET http://192.168.#.#/####/04"
+        command_off: "curl -X GET http://192.168.#.#/####/05"
+        friendly_name: Zone 03
+      irrig_zone4:
+        command_on: "curl -X GET http://192.168.#.#/####/06"
+        command_off: "curl -X GET http://192.168.#.#/####/07"
+        friendly_name: Zone 04
+      irrig_zone5:
+        command_on: "curl -X GET http://192.168.#.#/####/08"
+        command_off: "curl -X GET http://192.168.#.#/####/09"
+        friendly_name: Zone 05
+      irrig_zone6:
+        command_on: "curl -X GET http://192.168.#.#/####/10"
+        command_off: "curl -X GET http://192.168.#.#/####/11"
+        friendly_name: Zone 06
+      irrig_zone7:
+        command_on: "curl -X GET http://192.168.#.#/####/12"
+        command_off: "curl -X GET http://192.168.#.#/####/13"
+        friendly_name: Zone 07
+      irrig_zone8:
+        command_on: "curl -X GET http://192.168.#.#/####/14"
+        command_off: "curl -X GET http://192.168.#.#/####/15"
+        friendly_name: Zone 08
+
+input_boolean:
+  monday:
+    name: 1_Monday
+    initial: off
+  tuesday:
+    name: 2_Tuesday
+    initial: on
+  wednesday:
+    name: 3_Wednesday
+    initial: off
+  thursday:
+    name: 4_Thursday
+    initial: on
+  friday:
+    name: 5_Friday
+    initial: off
+  saturday:
+    name: 6_Saturday
+    initial: on
+  sunday:
+    name: 7_Sunday
+    initial: on
+  irragation_automation:
+    name: Irragation Automation
+    initial: off
+  zone1:
+    name: Front Main
+    initial: on
+  zone2:
+    name: Front Side
+    initial: off
+  zone3:
+    name: Guest Room
+    initial: on
+  zone4:
+    name: Cedar
+    initial: on
+
+input_number:
+  irrigation_rainthreshold:
+    name: Threshold
+    unit_of_measurement: hours
+    initial: 2
+    min: 1
+    max: 12
+    step: 1
+
+  irrig_durration_zone1:
+    name: Duration
+    unit_of_measurement: min
+    initial: 45
+    min: 0
+    max: 100
+    step: 5
+
+  irrig_durration_zone2:
+    name: Duration
+    unit_of_measurement: min
+    initial: 45
+    min: 0
+    max: 100
+    step: 5
+
+  irrig_durration_zone3:
+    name: Duration
+    unit_of_measurement: min
+    initial: 30
+    min: 0
+    max: 100
+    step: 5
+
+  irrig_durration_zone4:
+    name: Duration
+    unit_of_measurement: min
+    initial: 60
+    min: 0
+    max: 100
+    step: 5
+
+input_datetime:
+  irrigation_front_lastwatered:
+    name: Front Last Watered
+    has_date: true
+    has_time: true
+
+  irrigation_side_lastwatered:
+    name: Side Last Watered
+    has_date: true
+    has_time: true
+
+  irrigation_guest_lastwatered:
+    name: Guest Last Watered
+    has_date: true
+    has_time: true
+
+  irrigation_cedars_lastwatered:
+    name: Cedars Last Watered
+    has_date: true
+    has_time: true
+
+  irrigation_auto_time:
+    name: Automation Time
+    has_date: false
+    has_time: true
+    initial: "20:00:00"
+
+sensor:
+  - platform: time_date
+    display_options:
+      - "time"
+      - "date"
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone1
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=0)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone2
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=1)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone3
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=2)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone4
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=3)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone5
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=4)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone6
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=5)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone7
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=6)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: scrape
+    resource: http://192.168.#.#/####/99
+    name: zone8
+    select: "p"
+    value_template: >-
+      {% if (value | regex_findall_index("(\d)", index=7)) == "0" %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
+  - platform: template
+    sensors:
+      irrigation_time:
+        entity_id: group.irrig_states
+        value_template: >-
+          {% if states('switch.irrig_zone1') == 'on' %}
+            {% if (states('input_number.irrig_durration_zone1') | int) > 61 %}
+              01:{{ (states('input_number.irrig_durration_zone1') | int) - 61 }}:20
+            {% else %}
+              00:{{ (states('input_number.irrig_durration_zone1') | int) - 1}}:20
+            {% endif %}
+          {% elif states('switch.irrig_zone2') == 'on' %}
+            {% if (states('input_number.irrig_durration_zone2') | int) > 61 %}
+              01:{{ (states('input_number.irrig_durration_zone2') | int) - 61}}:20
+            {% else %}
+              00:{{ (states('input_number.irrig_durration_zone2') | int) - 1}}:20
+            {% endif %}
+          {% elif states('switch.irrig_zone3') == 'on' %}
+            {% if (states('input_number.irrig_durration_zone3') | int) > 61 %}
+              01:{{ (states('input_number.irrig_durration_zone3') | int) - 61}}:20
+            {% else %}
+              00:{{ (states('input_number.irrig_durration_zone3') | int) - 1}}:20
+            {% endif %}
+          {% elif states('switch.irrig_zone4') == 'on' %}
+            {% if (states('input_number.irrig_durration_zone4') | int) > 61 %}
+              01:{{ (states('input_number.irrig_durration_zone4') | int) - 61}}:20
+            {% else %}
+              00:{{ (states('input_number.irrig_durration_zone4') | int) - 1}}:20
+            {% endif %}
+          {% else %}
+            00:00:00
+          {% endif %}
+
+  - platform: template
+    sensors:
+      irrigation_time_diff:
+        entity_id: sensor.date, sensor.history_rainy_past_two_days, input_number.irrigation_rainthreshold, sun.sun
+        friendly_name: Time difference
+        value_template: >-
+          {% if states('sensor.history_rainy_past_two_days') | int < states('input_number.irrigation_rainthreshold') | int  %}True{% else %}False{%endif %}
+
+  - platform: template # determine if today is selected as a watering day for program 1
+    sensors:
+      irrigation_watering_day:
+        entity_id: sun.sun, input_boolean.monday, input_boolean.tuesday, input_boolean.wednesday, input_boolean.thursday, input_boolean.friday, input_boolean.saturday, input_boolean.sunday
+        value_template: >-
+          {% set sensor_names = [ 'monday', 'tuesday', 'wednesday','thursday','friday','saturday','sunday'] %}
+          {% set today_name = sensor_names[now().weekday()] %}
+          {% set entity_id = 'input_boolean.'+today_name %}
+          {{ is_state(entity_id, 'on') }}
+
+  - platform: template
+    sensors:
+      irrigation_watering_status:
+        entity_id: sensor.date, sensor.irrigation_watering_day, binary_sensor.irrigation_time_diff, automation.irrigation_irrigate, input_datetime.irrigation_auto_time, sun.sun
+        value_template: >-
+          {% if states('sensor.irrigation_watering_day') == 'True' %}
+            {% if states('automation.irrigation_irrigate') == 'on' %}
+              {% if states('sensor.irrigation_time_diff') == 'True' %}
+                Next irrigation today at {{ (state_attr('input_datetime.irrigation_auto_time', 'timestamp') | int | timestamp_custom('%-I:%M %p', False)) }}
+              {% else %}
+                Irrigation cancelled due to rain
+              {% endif %}
+            {% else %}
+              No irrigation today
+            {% endif %}
+          {% else %}
+             Irrigation is OFF
+          {% endif %}
+
+  - platform: history_stats
+    name: history_rainy_past_two_days_rainsensor
+    entity_id: binary_sensor.rainsensor
+    state: "on"
+    type: time
+    end: "{{ now() }}"
+    duration:
+      days: 2
+
+  - platform: history_stats
+    name: history_rainy_past_two_days_ecobee
+    entity_id: weather.my_ecobee3
+    state: "rainy"
+    type: time
+    end: "{{ now() }}"
+    duration:
+      days: 2
+
+  - platform: template
+    sensors:
+      history_rainy_past_two_days:
+        entity_id: sensor.date, sun.sun
+        friendly_name: "Rain in the Past 2 Days"
+        value_template: "{{ ((states('sensor.history_rainy_past_two_days_rainsensor') | float + states('sensor.history_rainy_past_two_days_ecobee') | float) / 2) | round }}"
+        unit_of_measurement: "h"
+
+  - platform: template
+    sensors:
+      irrig_front_last_irrigation:
+        entity_id: sensor.date, switch.irrig_zone1, input_datetime.irrigation_front_lastwatered
+        friendly_name: "Days Since Last Irrigation"
+        value_template: >-
+          {% if (((as_timestamp(now()) - state_attr('input_datetime.irrigation_front_lastwatered', 'timestamp')) / 86400)|round) == 0 %}
+            {% if (as_timestamp(now()) | timestamp_custom('%m/%d/%Y')) == (state_attr('input_datetime.irrigation_front_lastwatered', 'timestamp') | timestamp_custom('%m/%d/%Y'))  %}
+              Today at {{ (state_attr('input_datetime.irrigation_front_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% else %}
+              Yesterday at {{ (state_attr('input_datetime.irrigation_front_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% endif %}
+          {% else %}
+            {{ ((as_timestamp(now()) - state_attr('input_datetime.irrigation_front_lastwatered', 'timestamp')) / 86400)|round }}d ago
+          {% endif %}
+
+      irrig_side_last_irrigation:
+        entity_id: sensor.date, switch.irrig_zone2, input_datetime.irrigation_side_lastwatered
+        friendly_name: "Days Since Last Irrigation"
+        value_template: >-
+          {% if (((as_timestamp(now()) - state_attr('input_datetime.irrigation_side_lastwatered', 'timestamp')) / 86400)|round) == 0 %}
+            {% if (as_timestamp(now()) | timestamp_custom('%m/%d/%Y')) == (state_attr('input_datetime.irrigation_side_lastwatered', 'timestamp') | timestamp_custom('%m/%d/%Y'))  %}
+              Today at {{ (state_attr('input_datetime.irrigation_side_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% else %}
+              Yesterday at {{ (state_attr('input_datetime.irrigation_side_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% endif %}
+          {% else %}
+            {{ ((as_timestamp(now()) - state_attr('input_datetime.irrigation_side_lastwatered', 'timestamp')) / 86400)|round }}d ago
+          {% endif %}
+
+      irrig_guest_last_irrigation:
+        entity_id: sensor.date, switch.irrig_front_guest_yard, input_datetime.irrigation_guest_lastwatered
+        friendly_name: "Days Since Last Irrigation"
+        value_template: >-
+          {% if (((as_timestamp(now()) - state_attr('input_datetime.irrigation_guest_lastwatered', 'timestamp')) / 86400)|round) == 0 %}
+            {% if (as_timestamp(now()) | timestamp_custom('%m/%d/%Y')) == (state_attr('input_datetime.irrigation_guest_lastwatered', 'timestamp') | timestamp_custom('%m/%d/%Y'))  %}
+              Today at {{ (state_attr('input_datetime.irrigation_guest_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% else %}
+              Yesterday at {{ (state_attr('input_datetime.irrigation_guest_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% endif %}
+          {% else %}
+            {{ ((as_timestamp(now()) - state_attr('input_datetime.irrigation_guest_lastwatered', 'timestamp')) / 86400)|round }}d ago
+          {% endif %}
+
+      irrig_cedars_last_irrigation:
+        entity_id: sensor.date, switch.irrig_cedars, input_datetime.irrigation_cedars_lastwatered
+        friendly_name: "Days Since Last Irrigation"
+        value_template: >-
+          {% if (((as_timestamp(now()) - state_attr('input_datetime.irrigation_cedars_lastwatered', 'timestamp')) / 86400)|round) == 0 %}
+            {% if (as_timestamp(now()) | timestamp_custom('%m/%d/%Y')) == (state_attr('input_datetime.irrigation_cedars_lastwatered', 'timestamp') | timestamp_custom('%m/%d/%Y'))  %}
+              Today at {{ (state_attr('input_datetime.irrigation_cedars_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% else %}
+              Yesterday at {{ (state_attr('input_datetime.irrigation_cedars_lastwatered', 'timestamp') | int | timestamp_custom('%-I:%M %p', True)) }}
+            {% endif %}
+          {% else %}
+            {{ ((as_timestamp(now()) - state_attr('input_datetime.irrigation_cedars_lastwatered', 'timestamp')) / 86400)|round }}d ago
+          {% endif %}
+
+timer:
+  irrigation_timer:
+
+script:
+  rainbird_irrigate:
+    alias: Irrigate
+    sequence:
+      - variables:
+          zones: "{{ expand('group.irrig_zones') | selectattr('state', 'eq', 'on') | map(attribute='object_id') | list }}"
+      - repeat:
+          count: "{{ zones | count }}"
+          sequence:
+            - variables:
+                zone_script: "script.rainbird_irrig_{{ zones[repeat.index - 1] }}"
+            - service: script.turn_on
+              target:
+                entity_id: "{{ zone_script }}"
+            - wait_template: "{{ is_state(zone_script,'off') }}"
+            - delay: 00:00:30
+
+  rainbird_irrig_zone1:
+    sequence:
+      - data: {}
+        entity_id: script.rainbird_irrigate_off
+        service: script.turn_on
+      - delay: 00:00:05
+      - data: {}
+        entity_id: switch.irrig_zone1
+        service: switch.turn_on
+      - delay:
+          minutes: "{{ states('input_number.irrig_durration_zone1') | int }}"
+      - data: {}
+        entity_id: switch.irrig_zone1
+        service: switch.turn_off
+
+  rainbird_irrig_zone2:
+    sequence:
+      - data: {}
+        entity_id: script.rainbird_irrigate_off
+        service: script.turn_on
+      - delay: 00:00:05
+      - data: {}
+        entity_id: switch.irrig_zone2
+        service: switch.turn_on
+      - delay:
+          minutes: "{{ states('input_number.irrig_durration_zone2') | int }}"
+      - data: {}
+        entity_id: switch.irrig_zone2
+        service: switch.turn_off
+
+  rainbird_irrig_zone3:
+    sequence:
+      - data: {}
+        entity_id: script.rainbird_irrigate_off
+        service: script.turn_on
+      - delay: 00:00:05
+      - data: {}
+        entity_id: switch.irrig_zone3
+        service: switch.turn_on
+      - delay:
+          minutes: "{{ states('input_number.irrig_durration_zone3') | int }}"
+      - data: {}
+        entity_id: switch.irrig_zone3
+        service: switch.turn_off
+
+  rainbird_irrig_zone4:
+    sequence:
+      - data: {}
+        entity_id: script.rainbird_irrigate_off
+        service: script.turn_on
+      - delay: 00:00:05
+      - data: {}
+        entity_id: switch.irrig_zone4
+        service: switch.turn_on
+      - delay:
+          minutes: "{{ states('input_number.irrig_durration_zone4') | int }}"
+      - data: {}
+        entity_id: switch.irrig_zone4
+        service: switch.turn_off
+
+  rainbird_irrigate_off:
+    alias: Irrigate Off
+    sequence:
+      - variables:
+          relays: "{{ expand('group.irrig_relays') | selectattr('state', 'eq', 'on') | map(attribute='object_id') | list }}"
+      - repeat:
+          count: "{{ relays | count }}"
+          sequence:
+            - variables:
+                relay_script: "script.rainbird_{{ relays[repeat.index - 1] }}"
+                relay_switch: "switch.{{ relays[repeat.index - 1] }}"
+            - service: script.turn_off
+              target:
+                entity_id: "{{ relay_script }}"
+            - service: switch.turn_off
+              target:
+                entity_id: "{{ relay_switch }}"
+
+automation:
+  - alias: Irrigation.State.More.Than.One
+    trigger:
+      - platform: template
+        value_template: '{{  expand("group.irrig_states") | selectattr("state", "eq", "on") | list | count > 1 }}'
+    action:
+      - variables:
+          states: "{{ expand('group.irrig_states') | selectattr('state', 'eq', 'on') | map(attribute='object_id') | list }}"
+      - repeat:
+          count: "{{ states | count }}"
+          sequence:
+            - variables:
+                state_switch: "switch.irrig_{{ states[repeat.index - 1] }}"
+            - service: switch.turn_off
+              target:
+                entity_id: "{{ state_switch }}"
+
+  - alias: Irrigation.Irrigate
+    trigger:
+      - platform: template
+        value_template: >-
+          {{ states('sensor.time') == states('input_datetime.irrigation_auto_time')[0:5] }}
+    condition:
+      - condition: template
+        value_template: >-
+          {% set entity_id = 'input_boolean.' ~ now().timestamp() | timestamp_custom('%A') | lower %}
+          {{ is_state(entity_id, 'on') }}
+      - condition: template
+        value_template: >-
+          {{ states('sensor.history_rainy_past_two_days') | int < states('input_number.irrigation_rainthreshold') | int }}
+    action:
+      service: script.rainbird_irrigate
+
+  - alias: Irrigation.ON
+    trigger:
+      platform: state
+      entity_id: switch.irrig_zone1, switch.irrig_zone2, switch.irrig_zone3, switch.irrig_zone4, group.irrig_states
+      from: "off"
+      to: "on"
+    action:
+      - service: timer.start
+        data_template:
+          entity_id: timer.irrigation_timer
+          duration: "{{ states('sensor.irrigation_time') }}"
+
+  - alias: Irrigation.OFF
+    trigger:
+      platform: state
+      entity_id: switch.irrig_zone1, switch.irrig_zone2, switch.irrig_zone3, switch.irrig_zone4, group.irrig_states
+      to: "off"
+    action:
+      - service: timer.cancel
+        entity_id: timer.irrigation_timer
+
+  - alias: Irrigation.Front.Last.Watered
+    trigger:
+      platform: state
+      entity_id: switch.irrig_zone2
+      from: "off"
+      to: "on"
+      for:
+        minutes: "{{ states('input_number.irrig_durration_zone1') | int - 5 }}"
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.irrigation_front_lastwatered
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+  - alias: Irrigation.Side.Last.Watered
+    trigger:
+      platform: state
+      entity_id: switch.irrig_zone3
+      from: "off"
+      to: "on"
+      for:
+        minutes: "{{ states('input_number.irrig_durration_zone2') | int - 5 }}"
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.irrigation_side_lastwatered
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+  - alias: Irrigation.Guest.Last.Watered
+    trigger:
+      platform: state
+      entity_id: switch.irrig_zone1
+      from: "off"
+      to: "on"
+      for:
+        minutes: "{{ states('input_number.irrig_durration_zone3') | int - 5 }}"
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.irrigation_guest_lastwatered
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+  - alias: Irrigation.Cedars.Last.Watered
+    trigger:
+      platform: state
+      entity_id: switch.irrig_zone4
+      from: "off"
+      to: "on"
+      for:
+        minutes: "{{ states('input_number.irrig_durration_zone4') | int - 5 }}"
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.irrigation_cedars_lastwatered
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
