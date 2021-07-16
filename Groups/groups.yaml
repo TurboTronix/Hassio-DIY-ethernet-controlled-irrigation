@@ -1,0 +1,25 @@
+irrig_zones:
+  - input_boolean.zone1
+  - input_boolean.zone2
+  - input_boolean.zone3
+  - input_boolean.zone4
+
+irrig_relays:
+  - switch.irrig_zone1
+  - switch.irrig_zone2
+  - switch.irrig_zone3
+  - switch.irrig_zone4
+  - switch.irrig_zone5
+  - switch.irrig_zone6
+  - switch.irrig_zone7
+  - switch.irrig_zone8
+
+irrig_states:
+  - sensor.zone1
+  - sensor.zone2
+  - sensor.zone3
+  - sensor.zone4
+  - sensor.zone5
+  - sensor.zone6
+  - sensor.zone7
+  - sensor.zone8
