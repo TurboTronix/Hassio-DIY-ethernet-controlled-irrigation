@@ -1,18 +1,71 @@
+default_view:
+  icon: mdi:home
+  entities:
+    - group.doors
+    - group.alarm
+    - group.lights
+    - group.climate
+doors:
+  name: Doors
+  entities:
+    - cover.garage_big_door
+    - lock.schlage_be469_touchscreen_deadbolt_locked_9
+lights:
+  name: All lights
+  entities:
+    - light.inovelli_nzw31_smart_dimmer_wscene_level
+    - light.linear_wd500z1_wall_dimmer_switch_level
+    - light.linear_wd500z1_wall_dimmer_switch_level_2
+    - light.linear_wd500z1_wall_dimmer_switch_level_3
+    - light.linear_wd500z1_wall_dimmer_switch_level_4
+    - switch.driveway_light
+    - switch.kuna
+    - switch.ge_45609_onoff_relay_switch_switch
+    - switch.ge_45609_onoff_relay_switch_switch_2
+    - switch.ge_45609_onoff_relay_switch_switch_3
+    - switch.ge_45609_onoff_relay_switch_switch_4
+    - switch.ge_45609_onoff_relay_switch_switch_5
+    - switch.ge_45609_onoff_relay_switch_switch_6
+    - switch.inovelli_nzw30_smart_switch_switch
+    - switch.linear_ws15z1_wall_switch_switch
+    - switch.linear_ws15z1_wall_switch_switch_2
+climate:
+  name: Climate
+  entities:
+    - climate.my_ecobee3
+    - climate.stelpro_stzw402_electronic_thermostat_heating_1
+alarm:
+  name: DSC Alarm
+  entities:
+    - alarm_control_panel.home_alarm
+
+music_spotify:
+  name: Music
+  entities:
+    - input_select.spotify_playlist
+    - input_select.spotify_source
+    - script.spotify_music
+    - input_slider.spotify_volume
+
 irrig_zones:
   - input_boolean.zone1
   - input_boolean.zone2
   - input_boolean.zone3
   - input_boolean.zone4
+  - input_boolean.zone5
+  - input_boolean.zone6
+  - input_boolean.zone7
+  - input_boolean.zone8
 
 irrig_relays:
-  - switch.irrig_zone1
-  - switch.irrig_zone2
-  - switch.irrig_zone3
-  - switch.irrig_zone4
-  - switch.irrig_zone5
-  - switch.irrig_zone6
-  - switch.irrig_zone7
-  - switch.irrig_zone8
+  - switch.zone_01
+  - switch.zone_02
+  - switch.zone_03
+  - switch.zone_04
+  - switch.zone_05
+  - switch.zone_06
+  - switch.zone_07
+  - switch.zone_08
 
 irrig_states:
   - sensor.zone1
@@ -23,3 +76,13 @@ irrig_states:
   - sensor.zone6
   - sensor.zone7
   - sensor.zone8
+
+irrig_backyard:
+  - input_boolean.zone5
+  - input_boolean.zone6
+  - input_boolean.zone7
+
+irrig_backyard_btn:
+  - sensor.zone5
+  - sensor.zone6
+  - sensor.zone7
